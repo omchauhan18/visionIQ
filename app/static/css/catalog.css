@@ -1,0 +1,225 @@
+/* Global Styles */
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(to right, #2c3e50, #4ca1af);
+    color: white;
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background: rgba(0, 0, 0, 0.8);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 10;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #f39c12;
+}
+
+.nav-links {
+    margin-right: -600px;
+    list-style: none;
+    display: flex;
+    gap: 15px;
+}
+
+.nav-links li {
+    display: inline;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: #f39c12;
+}
+
+/* Theme Toggle */
+.theme-toggle {
+    position: relative;
+    right: 30px;
+}
+
+.theme-toggle input[type="checkbox"] {
+    display: none;
+}
+
+.theme-toggle label {
+    width: 40px;
+    height: 20px;
+    background: #ccc;
+    display: block;
+    border-radius: 50px;
+    position: relative;
+    cursor: pointer;
+}
+
+.theme-toggle label::after {
+    content: "";
+    width: 18px;
+    height: 18px;
+    background: white;
+    border-radius: 50%;
+    position: absolute;
+    top: 1px;
+    left: 1px;
+    transition: all 0.3s ease;
+}
+
+input[type="checkbox"]:checked + label {
+    background: #f39c12;
+}
+
+input[type="checkbox"]:checked + label::after {
+    transform: translateX(20px);
+}
+
+
+/* Section Styles */
+.section {
+    margin: 20px;
+}
+
+h2 {
+    margin-bottom: 10px;
+}
+
+/* Scrollable Container */
+.scrollable {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    max-height: 400px; /* Adjust height as needed */
+    overflow-y: auto; /* Enables vertical scrolling */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+
+
+
+
+/* Section Styles */
+.section {
+    padding: 60px 20px;
+    text-align: center;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 10px 0;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+}
+
+/* Catalog Section */
+#catalog {
+    padding: 60px 20px;
+    text-align: center;
+    position: relative;
+    background: url('catalog-background.jpg') center/cover no-repeat; /* Background image */
+    background-size: cover;
+}
+
+#catalog::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0); /* Dark overlay */
+    z-index: 1;
+}
+
+#catalog h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: white;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+}
+
+/* Super Container */
+.super-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+    overflow: hidden; /* Ensure content fits inside the container */
+}
+
+/* Individual Category Styling */
+.category {
+    position: relative;
+    width: 300px;
+    height: 200px;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Image Styling */
+.category img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease-in-out; /* Smooth zoom effect */
+}
+
+/* .category img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+} */
+
+/* Image Hover Effect */
+.category:hover img {
+    transform: scale(1.1); /* Zoom in on hover */
+}
+
+/* Heading Overlay Styling */
+.category h3 {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    background: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+    padding: 5px 15px;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    font-weight: bold;
+    text-align: center;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* Link Styling */
+.category a {
+    text-decoration: none;
+}
+
+/* Heading Hover Effect */
+.category:hover h3 {
+    background: rgba(255, 255, 255, 0.8); /* Lighter background */
+    color: black; /* Dark text for contrast */
+}

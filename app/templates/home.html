@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flipkart - VisionIQ</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">Flipkart VisionIQ</div>
+            <ul class="nav-links">
+                <li><a href="#home">HOME</a></li>
+                <li><a href="#catalog">CATALOG</a></li>
+                <li><a href="/predict">PREDICT</a></li>
+                <li><a href="/analysis">ANALYSIS</a></li>
+                <li><a href="/history">HISTORY</a></li>
+            </ul>
+            <div class="theme-toggle">
+                <input type="checkbox" id="theme-switch" />
+                <label for="theme-switch"></label>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <h1>Welcome to Flipkart VisionIQ</h1>
+                <p>Analyze trends, upload images, and track history like never before.</p>
+                <button class="cta" id="demoBtn">Demo!</button>
+            </div>
+        </section>
+
+        <section id="catalog" class="section">
+            <h2>Catalog</h2>
+            <div class="super-container">
+                <div class="category">
+                    <a href="/catalog">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRR3hizBuSvPUyEHHLmOX0qX7Ha3JKHjYsUbw&s" alt="Fruits">
+                        <h3>Fruits</h3>
+                    </a>
+                </div>
+                <div class="category">
+                    <a href="/catalog">
+                        <img src="https://cdn.britannica.com/17/196817-159-9E487F15/vegetables.jpg" alt="Vegetables">
+                        <h3>Vegetables</h3>
+                    </a>
+                </div>
+                <div class="category">
+                    <a href="/catalog">
+                        <img src="https://indianmediastudies.com/wp-content/uploads/2017/04/Britannia-2.jpg.webp" alt="Products">
+                        
+                        <h3>Products</h3>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- <section id="upload" class="section">
+            <h2>Upload or Capture Image</h2>
+            <p>Upload or capture your image for instant analysis. Get results in seconds!</p>
+            <button class="upload-btn">Upload Image</button>
+        </section> -->
+
+        <section id="history" class="section">
+            <h2>History</h2>
+            <p>Track your past uploads and analyses easily in one place.</p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Flipkart VisionIQ. All Rights Reserved.</p>
+    </footer>
+
+    <div id="videoModal" class="modal">
+        <div class="modal-content">
+            <video id="video" width="600" controls>
+                <source src="static\images\Our_test_video - Made with Clipchamp.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <button id="skipBtn" style="display: none;" onclick="closeVideo()">Skip</button>
+        </div>
+    </div>
+
+    <script src="/static/js/script.js"></script>
+</body>
+</html>

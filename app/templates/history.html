@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>History Section</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, #2c3e50, #4ca1af);
+            color: white;
+            min-height: 100vh;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 10px 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #f39c12;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #f39c12;
+        }
+
+        .history-title {
+            margin-top: 80px;
+            text-align: center;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .history-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            
+        }
+
+        .history-box {
+            width: 150%;
+            max-width: 1000px;
+            background: white;
+            color: black;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-height: 450px;
+        }
+
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .history-table thead {
+            background-color: #2c3e50;
+            color: white;
+        }
+
+        .history-table th, .history-table td {
+            padding: 10px;
+            text-align: left;
+            border: 1px solid black;
+        }
+
+        .history-table tbody {
+            display: block;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .history-table tbody tr {
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+        }
+
+        .history-table th {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">Flipkart VisionIQ</div>
+            <ul class="nav-links">
+                <li><a href="/">HOME</a></li>
+                <li><a href="/catalog">CATALOG</a></li>
+                <li><a href="/predict">PREDICT</a></li>
+                <li><a href="/analysis">ANALYSIS</a></li>
+                <li><a href="#history">HISTORY</a></li>
+            </ul>
+            <div class="theme-toggle">
+                <input type="checkbox" id="theme-switch" />
+                <label for="theme-switch"></label>
+            </div>
+        </nav>
+    </header>
+
+    <div class="history-title">History</div>
+
+    <div class="history-container">
+        <div class="history-box">
+            <table class="history-table">
+                <thead>
+                    <tr>
+                        <th>Date of Detection</th>
+                        <th>Time of Detection</th>
+                        <th>Records</th>
+                        <th>Class</th>
+                        <th>Current Status</th>
+                        <th>Remaining Days</th>
+                    </tr>
+                </thead>
+                <tbody id="history-body">
+                    <!-- Dynamic rows will be inserted here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const historyData = [
+                { date: "2024-12-09", time: "10:30 AM", records: "Record 1", class: "Class A", status: "Active", remaining: "5 days" },
+                { date: "2024-12-08", time: "11:00 AM", records: "Record 2", class: "Class B", status: "Inactive", remaining: "0 days" },
+                { date: "2024-12-07", time: "09:15 AM", records: "Record 3", class: "Class C", status: "Pending", remaining: "2 days" },
+                { date: "2024-12-06", time: "02:45 PM", records: "Record 4", class: "Class D", status: "Active", remaining: "8 days" },
+                { date: "2024-12-05", time: "12:30 PM", records: "Record 5", class: "Class E", status: "Completed", remaining: "0 days" },
+                { date: "2024-12-04", time: "04:50 PM", records: "Record 6", class: "Class F", status: "Active", remaining: "3 days" }
+            ];
+
+            const historyBody = document.getElementById("history-body");
+
+            historyData.forEach(entry => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${entry.date}</td>
+                    <td>${entry.time}</td>
+                    <td>${entry.records}</td>
+                    <td>${entry.class}</td>
+                    <td>${entry.status}</td>
+                    <td>${entry.remaining}</td>
+                `;
+                historyBody.appendChild(row);
+            });
+        });
+    </script>
+</body>
+</html>

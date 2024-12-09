@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flipkart - VisionIQ Predict Page</title>
+    <link rel="stylesheet" href="/static/css/predict.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">Flipkart VisionIQ</div>
+            <ul class="nav-links">
+                <li><a href="/">HOME</a></li>
+                <li><a href="/catalog">CATALOG</a></li>
+                <li><a href="#upload">PREDICT</a></li>
+                <li><a href="/analysis">ANALYSIS</a></li>
+                <li><a href="#history">HISTORY</a></li>
+            </ul>
+            <div class="theme-toggle">
+                <input type="checkbox" id="theme-switch" />
+                <label for="theme-switch"></label>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="upload-preview" id="upload-preview">
+            <span>Image preview here</span>
+            <div class="plus-icon" id="plus-icon">+</div>
+        </div>
+
+        <div class="action-buttons">
+            <button class="upload-button">
+                <i class="fas fa-upload"></i> Upload Image
+            </button>
+            <button class="capture-button">
+                <i class="fas fa-camera"></i> Capture Image
+            </button>
+        </div>
+
+        <button class="predict-button" id="predict-button">Predict</button>
+    </div>
+
+    <div id="popup-overlay" class="popup-overlay">
+        <div id="popup-box" class="popup-box">
+            <div class="popup-header">
+                <h2>Predicted Item</h2>
+                <button id="close-popup" class="close-btn">&times;</button>
+            </div>
+            <div class="popup-content">
+                <div class="image-column" id="popup-images"></div>
+                <div class="summary-column">
+                    <table id="popup-summary">
+                        <thead>
+                            <tr>
+                                <th>Product Name</th>
+                                <th>Status</th>
+                                <th>Result</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                <!-- New table for Records, Product Class, Remaining Days -->
+                <div class="records-column">
+                    <table id="popup-table">
+                        <thead>
+                            <tr>
+                                <th>Records</th>
+                                <th>Product Class</th>
+                                <th>Remaining Days</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Dynamic rows will be added here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="popup-footer">
+                <button id="recheck-btn" class="btn">Recheck</button>
+                <button id="predict-next" class="btn">Predict Next</button>
+            </div>
+        </div>
+    </div>
+
+
+    <footer>
+        <p>&copy; 2024 Flipkart VisionIQ. All Rights Reserved.</p>
+    </footer>
+
+    <script src="/static/js/predict.js"></script>
+</body>
+</html>

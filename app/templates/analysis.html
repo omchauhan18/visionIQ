@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <!-- <link rel="stylesheet" href="styles.css"> -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, #2c3e50, #4ca1af);
+            color: white;
+            padding: 20px;
+        }
+
+        /* Header */
+        .dashboard-header {
+            background-color: #fffff0;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+        }
+
+        .trend-icon {
+            width: 30px;
+            height: 30px;
+            margin-right: 10px;
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: bold;
+            color: #000;
+        }
+
+        /* Back Button */
+        .back-button {
+            background-color: #4ca1af;
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            margin-right: 20px;
+        }
+
+        .back-button:hover {
+            background-color: #2c3e50;
+        }
+
+        /* Dashboard Layout */
+        .dashboard-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* Three columns per row */
+            gap: 20px; /* Space between grid items */
+            margin: auto;
+        }
+
+        /* Dashboard Box */
+        .dashboard-box {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column; /* For stacking items if needed */
+            align-items: center;    /* Center horizontally */
+            justify-content: center; /* Center vertically */
+            height: 350px;
+        }
+
+        /* Speedometer and List Styling */
+        #freshnessSpeedometerContainer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            height: 100%;
+            width: 100%;
+        }
+
+        #freshnessScoreList {
+            max-height: 100px;
+            overflow-y: scroll;
+            width: 100%;
+            padding: 10px;
+            list-style: none;
+        }
+
+        #freshnessScoreList li {
+            font-size: 14px;
+            padding: 5px;
+        }
+
+        /* Custom Scrollbar */
+        #freshnessScoreList::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        #freshnessScoreList::-webkit-scrollbar-thumb {
+            background-color: #ccc;
+            border-radius: 10px;
+        }
+
+        /* Speedometer */
+        #freshnessSpeedometer {
+            max-width: 200px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="dashboard-header">
+        <a href="/" class="back-button">Back</a>
+        <div class="header-content">
+            <img src="trend-icon.png" alt="Trend Icon" class="trend-icon">
+            <h1>Trends Dashboard</h1>
+        </div>
+    </header>
+
+    <!-- Dashboard Container -->
+    <div class="dashboard-container">
+        <!-- Delivery Share Pie Chart -->
+        <div class="dashboard-box">
+            <h3>Delivery Share</h3>
+            <canvas id="deliveryShareChart"></canvas>
+        </div>
+
+        <!-- Freshness Product Selling Bar Chart -->
+        <div class="dashboard-box">
+            <h3>Freshness Product Selling</h3>
+            <canvas id="freshnessSellingChart"></canvas>
+        </div>
+
+        <!-- Brands Performance Bar Chart -->
+        <div class="dashboard-box">
+            <h3>Brands Performance</h3>
+            <canvas id="brandsPerformanceChart"></canvas>
+        </div>
+
+        <!-- Average Freshness Speedometer and List -->
+        <div class="dashboard-box">
+            <h3>Average Freshness</h3>
+            <div id="freshnessSpeedometerContainer">
+                <canvas id="freshnessSpeedometer"></canvas>
+                <ul id="freshnessScoreList"></ul>
+            </div>
+        </div>
+
+        <!-- Products Tested Per Day -->
+        <div class="dashboard-box">
+            <h3>Products Tested Per Day</h3>
+            <canvas id="productsTestedChart"></canvas>
+        </div>
+
+        <!-- Manufacturing Categories Pie Chart -->
+        <div class="dashboard-box">
+            <h3>Manufacturing Categories</h3>
+            <canvas id="manufacturingCategoriesChart"></canvas>
+        </div>
+    </div>
+
+<script src="/static/js/script.js"></script>
+</body>
+</html>

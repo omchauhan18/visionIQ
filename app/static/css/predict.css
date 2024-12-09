@@ -1,0 +1,262 @@
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(to right, #2c3e50, #4ca1af);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background: rgba(0, 0, 0, 0.8);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 15;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #f39c12;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+    margin-right: -600px;
+}
+
+.nav-links li {
+    display: inline;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    transition: color 0.3s ease;
+    
+}
+
+.nav-links a:hover {
+    color: #f39c12;
+}
+
+/* Theme Toggle */
+.theme-toggle {
+    position: relative;
+    right: 30px;
+}
+
+.theme-toggle input[type="checkbox"] {
+    display: none;
+}
+
+.theme-toggle label {
+    width: 40px;
+    height: 20px;
+    background: #ccc;
+    display: block;
+    border-radius: 50px;
+    position: relative;
+    cursor: pointer;
+}
+
+.theme-toggle label::after {
+    content: "";
+    width: 18px;
+    height: 18px;
+    background: white;
+    border-radius: 50%;
+    position: absolute;
+    top: 1px;
+    left: 1px;
+    transition: all 0.3s ease;
+}
+
+input[type="checkbox"]:checked + label {
+    background: #f39c12;
+}
+
+input[type="checkbox"]:checked + label::after {
+    transform: translateX(20px);
+}
+
+/* Center Container */
+.container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 20px;
+}
+
+/* Upload Preview */
+.upload-preview {
+    width: 80%;
+    max-width: 600px;
+    height: 300px;
+    border: 2px dashed #ccc;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background-color: #f9f9f9;
+}
+
+.upload-preview.dragover {
+    border-color: #007bff;
+    background-color: #e7f1ff;
+}
+
+.upload-preview span {
+    color: #aaa;
+    font-size: 16px;
+}
+
+/* Action Buttons */
+.action-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.action-buttons button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.upload-button {
+    background-color: #007bff;
+    color: white;
+}
+
+.capture-button {
+    background-color: #28a745;
+    color: white;
+}
+
+.predict-button {
+    background-color: #ff5722;
+    color: white;
+    margin-top: 20px;
+    padding: 10px 40px;
+    font-size: 18px;
+    border: none;
+    border-radius: 6px;
+    cursor: not-allowed;
+}
+
+.predict-button.enabled {
+    cursor: pointer;
+    background-color: #d84315;
+}
+
+.plus-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 24px;
+    height: 24px;
+    background-color: #007bff;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    cursor: pointer;
+    display: none;
+    z-index: 16;
+}
+
+.plus-icon.enabled {
+    display: flex;
+}
+
+/* Footer Fixed */
+footer {
+    text-align: center;
+    padding: 10px 0;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    margin-top: 20px;
+}
+
+
+
+/* Popup Overlay */
+.popup-overlay {
+    display: none; /* Initially hidden */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Make sure it's above other content */
+}
+
+/* Popup Box */
+.popup-box {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 600px;
+    max-height: 80%;
+    overflow-y: auto; /* Allows scrolling if content overflows */
+    display: flex;
+    flex-direction: column;
+}
+
+.popup-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.popup-content {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 0;
+}
+
+.popup-footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+/* Button Styles */
+.btn {
+    padding: 10px 20px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
