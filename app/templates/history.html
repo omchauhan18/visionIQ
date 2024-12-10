@@ -64,7 +64,6 @@
             display: flex;
             justify-content: center;
             margin-top: 20px;
-            
         }
 
         .history-box {
@@ -151,32 +150,6 @@
         </div>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const historyData = [
-                { date: "2024-12-09", time: "10:30 AM", records: "Record 1", class: "Class A", status: "Active", remaining: "5 days" },
-                { date: "2024-12-08", time: "11:00 AM", records: "Record 2", class: "Class B", status: "Inactive", remaining: "0 days" },
-                { date: "2024-12-07", time: "09:15 AM", records: "Record 3", class: "Class C", status: "Pending", remaining: "2 days" },
-                { date: "2024-12-06", time: "02:45 PM", records: "Record 4", class: "Class D", status: "Active", remaining: "8 days" },
-                { date: "2024-12-05", time: "12:30 PM", records: "Record 5", class: "Class E", status: "Completed", remaining: "0 days" },
-                { date: "2024-12-04", time: "04:50 PM", records: "Record 6", class: "Class F", status: "Active", remaining: "3 days" }
-            ];
-
-            const historyBody = document.getElementById("history-body");
-
-            historyData.forEach(entry => {
-                const row = document.createElement("tr");
-                row.innerHTML = `
-                    <td>${entry.date}</td>
-                    <td>${entry.time}</td>
-                    <td>${entry.records}</td>
-                    <td>${entry.class}</td>
-                    <td>${entry.status}</td>
-                    <td>${entry.remaining}</td>
-                `;
-                historyBody.appendChild(row);
-            });
-        });
-    </script>
+    <script src="history.js"></script>
 </body>
 </html>

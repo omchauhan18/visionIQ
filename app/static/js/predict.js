@@ -1,15 +1,53 @@
+// Firebase Initialization
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+
+// Import the functions you need from the SDKs you need
+
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyAB08F3M-PszKDuYj33U8tXA9GrgcUwMGc",
+  authDomain: "visioniq-ram22.firebaseapp.com",
+  projectId: "visioniq-ram22",
+  storageBucket: "visioniq-ram22.firebasestorage.app",
+  messagingSenderId: "613181488839",
+  appId: "1:613181488839:web:29274f31cb85662ae808e2",
+  measurementId: "G-HBKNKQVQ6S"
+};
+
+// Initialize Firebase and Firestore
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+// DOM Elements
 const uploadPreview = document.getElementById('upload-preview');
 const predictButton = document.getElementById('predict-button');
 const plusIcon = document.getElementById('plus-icon');
-const uploadButton = document.querySelector('.upload-button');
-const captureButton = document.querySelector('.capture-button');
-const themeSwitch = document.getElementById('theme-switch');
 const popupOverlay = document.getElementById('popup-overlay');
 const closePopupButton = document.getElementById('close-popup');
 const recheckButton = document.getElementById('recheck-btn');
 const predictNextButton = document.getElementById('predict-next');
 
-// Drag-and-drop functionality
+// Image Upload Logic
+let uploadedImage = null;
+
+function previewImage(file) {
+    const reader = new FileReader();
+    reader.onload = (event) => {
+        uploadPreview.innerHTML = `<img src="${event.target.result}" alt="Uploaded Image Preview" style="max-width: 100%; max-height: 100%;">`;
+        predictButton.classList.add('enabled');
+        predictButton.disabled = false; // Enable the predict button
+        plusIcon.classList.add('enabled');
+        uploadedImage = event.target.result; // Save the image data
+    };
+    reader.readAsDataURL(file);
+}
+
+// Drag-and-Drop and Upload Button
 uploadPreview.addEventListener('dragover', (e) => {
     e.preventDefault();
     uploadPreview.classList.add('dragover');
@@ -22,150 +60,79 @@ uploadPreview.addEventListener('dragleave', () => {
 uploadPreview.addEventListener('drop', (e) => {
     e.preventDefault();
     uploadPreview.classList.remove('dragover');
-
     const file = e.dataTransfer.files[0];
     if (file && file.type.startsWith('image/')) {
-        const reader = new FileReader();
-        reader.onload = (event) => {
-            uploadPreview.innerHTML = `<img src="${event.target.result}" alt="Uploaded Image Preview" style="max-width: 100%; max-height: 100%;">`;
-            predictButton.classList.add('enabled');
-            predictButton.disabled = false; // Enable the predict button
-            plusIcon.classList.add('enabled');
-        };
-        reader.readAsDataURL(file);
+        previewImage(file);
     } else {
         alert('Please upload a valid image file.');
     }
 });
 
-// Upload Image button functionality
-uploadButton.addEventListener('click', () => {
-    const input = document.createElement('input');
-    input.type = 'file';
-    input.accept = 'image/*';
-    input.addEventListener('change', (event) => {
-        const file = event.target.files[0];
-        if (file && file.type.startsWith('image/')) {
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                uploadPreview.innerHTML = `<img src="${e.target.result}" alt="Uploaded Image Preview" style="max-width: 100%; max-height: 100%;">`;
-                predictButton.classList.add('enabled');
-                predictButton.disabled = false; // Enable the predict button
-                plusIcon.classList.add('enabled');
-            };
-            reader.readAsDataURL(file);
-        } else {
-            alert('Please upload a valid image file.');
+// Prediction Button Logic
+predictButton.addEventListener('click', async () => {
+    if (!uploadedImage) {
+        alert('Please upload an image first!');
+        return;
+    }
+
+    // Send image to backend for prediction
+    const response = await fetch('/predict', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ image: uploadedImage })
+    });
+
+    const result = await response.json();
+
+    // Display the result in the popup
+    popupOverlay.style.display = 'flex';
+    document.querySelector('#popup-title').textContent = 'Prediction Result';
+    document.querySelector('#popup-summary tbody').innerHTML = `
+        <tr>
+            <td>Product</td>
+            <td>${result.product}</td>
+            <td>${result.remainingDays} Days</td>
+        </tr>
+    `;
+    document.getElementById('popup-images').innerHTML = `
+        <img src="${result.predictedImage}" alt="Predicted Item Image" style="width: 300px; height: 300px; margin-right: 20px;">
+    `;
+});
+
+// Predict Next Button Logic
+predictNextButton.addEventListener('click', async () => {
+    const predictionData = {
+        product: document.querySelector('#popup-summary tbody tr td:nth-child(2)').textContent,
+        remainingDays: document.querySelector('#popup-summary tbody tr td:nth-child(3)').textContent,
+        timestamp: new Date()
+    };
+
+    // Check if the 'predictions' collection exists by querying the collection
+    const predictionsCollectionRef = collection(db, 'predictions');
+    const querySnapshot = await getDocs(predictionsCollectionRef);
+
+    // If there are any documents in the predictions collection, it exists
+    if (!querySnapshot.empty) {
+        // Save the result to Firestore (collection already exists)
+        try {
+            await addDoc(predictionsCollectionRef, predictionData);
+            alert('Data saved successfully!');
+        } catch (error) {
+            console.error('Error saving data: ', error);
+            alert('Failed to save data.');
         }
-    });
-    input.click();
-});
+    } else {
+        // If the collection doesn't exist, Firestore will automatically create it when we add the first document.
+        try {
+            await addDoc(predictionsCollectionRef, predictionData);
+            alert('Data saved successfully!');
+        } catch (error) {
+            console.error('Error saving data: ', error);
+            alert('Failed to save data.');
+        }
+    }
 
-// Capture Image button functionality
-captureButton.addEventListener('click', () => {
-    const videoElement = document.createElement('video');
-    videoElement.autoplay = true;
-    videoElement.style.maxWidth = '100%';
-    videoElement.style.maxHeight = '100%';
-
-    const captureContainer = document.createElement('div');
-    captureContainer.style.position = 'relative';
-    captureContainer.style.display = 'flex';
-    captureContainer.style.flexDirection = 'column';
-    captureContainer.style.alignItems = 'center';
-
-    const captureBtn = document.createElement('button');
-    captureBtn.textContent = 'Capture';
-    captureBtn.style.marginTop = '10px';
-
-    captureContainer.appendChild(videoElement);
-    captureContainer.appendChild(captureBtn);
-
-    uploadPreview.innerHTML = '';
-    uploadPreview.appendChild(captureContainer);
-
-    navigator.mediaDevices.getUserMedia({ video: true })
-        .then((stream) => {
-            videoElement.srcObject = stream;
-
-            captureBtn.addEventListener('click', () => {
-                const canvas = document.createElement('canvas');
-                canvas.width = videoElement.videoWidth;
-                canvas.height = videoElement.videoHeight;
-                const context = canvas.getContext('2d');
-                context.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
-
-                // Stop video stream
-                stream.getTracks().forEach((track) => track.stop());
-
-                uploadPreview.innerHTML = `<img src="${canvas.toDataURL()}" alt="Captured Image Preview" style="max-width: 100%; max-height: 100%;">`;
-                predictButton.classList.add('enabled');
-                predictButton.disabled = false; // Enable the predict button
-                plusIcon.classList.add('enabled');
-            });
-        })
-        .catch((err) => {
-            alert('Could not access your camera.');
-        });
-});
-
-// Handle theme toggle
-themeSwitch.addEventListener('change', () => {
-    document.body.classList.toggle('dark-theme');
-});
-
-    // Simulate prediction and show popup
-    predictButton.addEventListener('click', () => {
-        // Simulate the prediction (this should be replaced with actual prediction logic)
-        setTimeout(() => {
-            popupOverlay.style.display = 'flex';
-            
-            // Set the title of the popup box
-            document.querySelector('#popup-title').textContent = 'Predicted Item';
-            
-            // Add dynamic table content (for example purposes, you can replace this with actual data)
-            document.querySelector('#popup-summary tbody').innerHTML = `
-                <tr>
-                    <td>Example Product</td>
-                    <td>Available</td>
-                    <td>100% Match</td>
-                </tr>
-            `;
-            
-            // Add dynamic table content for Records, Product Class, and Remaining Days
-            document.querySelector('#popup-table tbody').innerHTML = `
-                <tr>
-                    <td>Record 1</td>
-                    <td>Class A</td>
-                    <td>5 Days</td>
-                </tr>
-                <tr>
-                    <td>Record 2</td>
-                    <td>Class B</td>
-                    <td>10 Days</td>
-                </tr>
-                <tr>
-                    <td>Record 3</td>
-                    <td>Class C</td>
-                    <td>3 Days</td>
-                </tr>
-            `;
-
-            // Add the predicted item image
-            document.getElementById('popup-images').innerHTML = `
-                <img src="https://via.placeholder.com/150" alt="Predicted Item Image" style="width: 300px; height: 300px; margin-right: 20px;">
-            `;
-        }, 1000);
-    });
-
-
-// Close the popup
-closePopupButton.addEventListener('click', () => {
-    popupOverlay.style.display = 'none';
-});
-
-// Recheck button
-recheckButton.addEventListener('click', () => {
+    // Close popup and reset UI
     popupOverlay.style.display = 'none';
     uploadPreview.innerHTML = `<span>Image preview here</span>`;
     predictButton.classList.remove('enabled');
@@ -173,8 +140,13 @@ recheckButton.addEventListener('click', () => {
     plusIcon.classList.remove('enabled');
 });
 
-// Predict Next button
-predictNextButton.addEventListener('click', () => {
+// Close Popup Logic
+closePopupButton.addEventListener('click', () => {
+    popupOverlay.style.display = 'none';
+});
+
+// Recheck Button Logic
+recheckButton.addEventListener('click', () => {
     popupOverlay.style.display = 'none';
     uploadPreview.innerHTML = `<span>Image preview here</span>`;
     predictButton.classList.remove('enabled');
